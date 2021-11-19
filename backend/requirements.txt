@@ -1,0 +1,6 @@
+flask==2.0.2
+
+
+# For manager database
+flask-sqlalchemy==2.5.1
+gunicorn==20.1.0
