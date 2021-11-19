@@ -4,13 +4,25 @@ import {
     FormControlLabel, TextField, FormGroup,
     Select, Checkbox, MenuItem, Switch,
     InputLabel, Slider, Box, Typography, Button, CircularProgress,
-    Snackbar, Container
+    Snackbar, Container, Modal
 } from "@material-ui/core"
 import {Alert} from "@material-ui/lab"
 import Carousel from 'react-material-ui-carousel'
 import Room from "./Room"
 import style from "./style.css"
 import { Redirect } from "react-router-dom"
+import Registration from "./Registration"
+
+const styleModal = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
 
 function ButtonComponent(props) {
     const { onClick, loading } = props;
@@ -47,6 +59,10 @@ export default () => {
     const [neighborsSmoking, setNeighborsSmoking] = useState(false)
     const [neighborsHasChild, setNeighborsHasChild] = useState(false)
     const [open, setOpen] = useState(false)
+    const [openm, setOpenm] = useState(false);
+    const handleOpenm = () => setOpenm(true);
+    const handleClosem = () => setOpenm(false);
+
     const handleChangeGender = (event) => {
         setGender(event.target.value)
     }
@@ -98,6 +114,9 @@ export default () => {
     }
 
     const handleBook = (id, place) => {
+        console.log("booked")
+        handleOpenm()
+        return
         return async () => {
             let user = {
                 "gender": gender,
@@ -155,7 +174,7 @@ export default () => {
             "neighborsHasChild": neighborsHasChild,
         }
         console.log(body)
-        const res = await fetch('https://aprvp.herokuapp.com/room/sorted', {
+        const res = await fetch('https://hip2.herokuapp.com/sort', {
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
@@ -171,6 +190,16 @@ export default () => {
     }
     return (
         <>
+        <Modal
+            open={openm}
+            onClose={handleClosem}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={styleModal}>
+                <Registration/>
+            </Box>
+        </Modal>
         <Container>
         <Grid
             container
@@ -309,9 +338,14 @@ export default () => {
             </Grid>
         </Grid>
         </Container>
+            <Box sx={{display:"flex", justifyContent:"center"}}>
+                {goodList.length === 0 && alternativeList.length === 0 ? <div></div> : (
+                    <img src="/RZD/static/scheme.png" alt="scheme" />
+                )}
+            </Box>
             <Box sx={{ minHeight: 300, mt: 1 }}>
             {goodList.length === 0 && alternativeList.length === 0 ? <div></div> : (
-                    <Box style={{ backgroundImage: "url(https://www.rzd.ru/api/media/resources/1736351)", padding: 10, color: "#fff"}}>
+                        <Box style={{ backgroundImage: "url(https://arbuztoday.ru/wp-content/uploads/2021/04/2021-04-14-%D0%9F%D1%80%D0%B8%D0%B2%D0%96%D0%94-%D0%90%D1%81%D1%82%D1%80%D0%B0%D1%85-%D0%B1%D0%B0%D0%B7%D0%B0-%D0%9A%D0%B0%D1%81%D0%BF.-%D0%BB%D0%BE%D1%82%D0%BE%D1%81-4.jpeg)", padding: 10, color: "#fff", height: "100%", backgroundRepeat:"no-repeat", backgroundSize:"cover"}}>
                         <FormControlLabel control={<Switch color="primary" checked={chaisedList} onChange={handleChangeList} />} label="Показать альтернативные места" />
                         {
                             chaisedList ? 
@@ -323,7 +357,7 @@ export default () => {
                                             }
                                         }}
                                     >
-                                        {alternativeList.map((item) => <Room key={item.id_room} room={item} handleBook={handleBook}/>)}
+                                        {alternativeList.map((item) => <Room key={item.address} room={item} handleBook={handleBook}/>)}
                                     </Carousel>
                                 ) :
                                 goodList.length === 0 ? <p>Нет вариантов</p> : (
@@ -334,7 +368,11 @@ export default () => {
                                             }
                                         }}
                                     >
-                                        {goodList.map((item) => <Room key={item.id_room} room={item} handleBook={handleBook}/>)}
+                                        {goodList.map((item) => {
+                                            console.log(item.address)
+                                            return <Room key={item.address} room={item} handleBook={handleBook}/>
+                                        })}
+                                            
                                     </Carousel>
                             )
                         }

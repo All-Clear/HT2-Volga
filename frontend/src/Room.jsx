@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Button } from '@material-ui/core'
+import { Box, Grid, Button, Modal } from '@material-ui/core'
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 import first from "./static/first.png"
@@ -10,10 +10,10 @@ import fourth from "./static/fourth.png"
 
 export default function Room({ room, handleBook }) {
     let passengers = [{ place_in_room: -1 }, { place_in_room: -1 }, { place_in_room: -1 }, { place_in_room: -1 }]
-    room.passengers.forEach(item => {
+    room.tenants.forEach(item => {
         passengers[item.place_in_room-1] = item
     });
-    console.log(passengers)
+    console.log(room.address)
     return (
         <div>
             <Box sx={{ minHeight: 300, width: "85%", margin: "auto" }}>
@@ -39,7 +39,7 @@ export default function Room({ room, handleBook }) {
                                         }}
                                     >
                                         <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center", flexDirection: "column", textAlign: "center" }}>
-                                            Свободно <br /> место - {4*(room.id_room-1)+i+1} купе - {room.id_room}
+                                            Свободно <br /> место - {4*(room.address-1)+i+1} домик - {room.address}
                                             {i === 0 ? <img src={first} alt="" style={{height: 200}} /> : ""}
                                             {i === 1 ? <img src={second} alt="" style={{ height: 200 }} /> : ""}
                                             {i === 2 ? <img src={third} alt="" style={{ height: 200 }} /> : ""}
@@ -51,7 +51,8 @@ export default function Room({ room, handleBook }) {
                                             backgroundColor: '#767d89',
                                             color: "#fff" }}>
                                         <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>
-                                            <Button onClick={handleBook(room.id_room, i+1)} variant="contained" color="primary" disableElevation>
+                                            
+                                            <Button onClick={() => handleBook(room.address, i + 1)} variant="contained" color="primary" disableElevation>
                                                 Забронировать
                                             </Button>
                                         </Box>
@@ -73,7 +74,7 @@ export default function Room({ room, handleBook }) {
                                     }}
                                 >
                                     <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                                        Занятое место - {room.id_room} купе
+                                        Занятое место - {room.address} домик
                                         {i === 0 ? <img src={first} alt="" style={{ height: 200 }} /> : ""}
                                         {i === 1 ? <img src={second} alt="" style={{ height: 200 }} /> : ""}
                                         {i === 2 ? <img src={third} alt="" style={{ height: 200 }} /> : ""}
@@ -105,8 +106,6 @@ export default function Room({ room, handleBook }) {
                             </Flippy>
                         </Grid>
                         )})}
-                    
-
                 </Grid>
             </Box>
         </div>
