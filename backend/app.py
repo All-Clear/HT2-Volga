@@ -1,13 +1,12 @@
 from flask import Flask
-from db.manager_db import db
+
+from pages import index
 
 app = Flask(__name__)
 
 app.config.from_pyfile("config.py")
 
-db.init_app(app)
-with app.app_context():
-    db.create_all()
+app.register_blueprint(index.blueprint)
 
 
 @app.after_request

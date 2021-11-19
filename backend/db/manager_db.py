@@ -1,3 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from pymongo import MongoClient
+from config import MongoDB_URL
 
-db = SQLAlchemy()
+clint_db = MongoClient(MongoDB_URL)
+db = clint_db["rooms"]

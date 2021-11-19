@@ -1,5 +1,9 @@
-from ..manager_db import db
+class Room:
+    def __init__(self, place, address, is_full=False):
+        self.place = place
+        self.address = address
 
+        self.is_full = is_full
 
-class Room(db.Model):
-    id = db.Column(db.BigInteger, primery_key=True)
+    def to_json(self):
+        return {"place": self.place, "address": self.address, "is_full": self.is_full}
