@@ -1,5 +1,6 @@
+from flask import Blueprint, request
 from db.manager_db import db
-from flask import Blueprint
+from db.tables.rooms import Room
 
 blueprint = Blueprint("index", __name__)
 
@@ -9,17 +10,15 @@ def index_select():
     return []
 
 
-@blueprint.route("/", methods=["GET", "POST"])
-def index():
-    return {"result": list(db["rooms"].find())}
+@blueprint.route("/", methods=["GET"])
+def index_get():
+    return {"result": [Room.from_db(**room).to_json() for room in db["rooms"].find()]}
 
 
-@blueprint.route("/sort", methods=["SELECT"])
-def sort_select():
-    return []
+@blueprint.route("/", methods=["POST"])
+def index_post():
+    json_data = request.get_json()
+    room = Room(**json_data)
 
-
-@blueprint.route("/sort", methods=["GET", "POST"])
-def sort():
-    return {"result": list(db["rooms"].find())}
-
+    db["rooms"].insert_one(room.to_db()[1])
+    return {}
