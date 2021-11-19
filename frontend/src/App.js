@@ -19,7 +19,7 @@ function App() {
       default: "#e9eaed"
     },
     typography: {
-      fontFamily: '\'MyFont\''
+      fontFamily: '\'Montserrat\''
     },
     palette: {
       mode: 'light',

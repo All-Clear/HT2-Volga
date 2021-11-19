@@ -18,7 +18,7 @@ const styleModal = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    minWidth: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -59,9 +59,14 @@ export default () => {
     const [neighborsSmoking, setNeighborsSmoking] = useState(false)
     const [neighborsHasChild, setNeighborsHasChild] = useState(false)
     const [open, setOpen] = useState(false)
+
     const [openm, setOpenm] = useState(false);
     const handleOpenm = () => setOpenm(true);
     const handleClosem = () => setOpenm(false);
+    
+    const [scheme, setScheme] = useState(false);
+    const openScheme = () => setScheme(true);
+    const closeScheme = () => setScheme(false);
 
     const handleChangeGender = (event) => {
         setGender(event.target.value)
@@ -198,6 +203,16 @@ export default () => {
         >
             <Box sx={styleModal}>
                 <Registration/>
+            </Box>
+        </Modal>
+        <Modal
+            open={scheme}
+            onClose={closeScheme}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={styleModal}>
+                <img src="/RZD/static/scheme.png" alt="scheme" />
             </Box>
         </Modal>
         <Container>
@@ -338,22 +353,18 @@ export default () => {
             </Grid>
         </Grid>
         </Container>
-            <Box sx={{display:"flex", justifyContent:"center"}}>
-                {goodList.length === 0 && alternativeList.length === 0 ? <div></div> : (
-                    <img src="/RZD/static/scheme.png" alt="scheme" />
-                )}
-            </Box>
             <Box sx={{ minHeight: 300, mt: 1 }}>
             {goodList.length === 0 && alternativeList.length === 0 ? <div></div> : (
                         <Box style={{ backgroundImage: "url(https://arbuztoday.ru/wp-content/uploads/2021/04/2021-04-14-%D0%9F%D1%80%D0%B8%D0%B2%D0%96%D0%94-%D0%90%D1%81%D1%82%D1%80%D0%B0%D1%85-%D0%B1%D0%B0%D0%B7%D0%B0-%D0%9A%D0%B0%D1%81%D0%BF.-%D0%BB%D0%BE%D1%82%D0%BE%D1%81-4.jpeg)", padding: 10, color: "#fff", height: "100%", backgroundRepeat:"no-repeat", backgroundSize:"cover"}}>
                         <FormControlLabel control={<Switch color="primary" checked={chaisedList} onChange={handleChangeList} />} label="Показать альтернативные места" />
+                        <Button color="primary" variant="contained" style={{ marginBottom: "10px" }} onClick={openScheme}>Показать схему домов</Button>
                         {
                             chaisedList ? 
                                 alternativeList.length === 0 ? <p>Нет вариантов</p> : (
                                     <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible
                                         activeIndicatorIconButtonProps={{
                                             style: {
-                                                color: '#E21A1A',
+                                                color: '#835AA2',
                                             }
                                         }}
                                     >
@@ -364,7 +375,7 @@ export default () => {
                                     <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible
                                         activeIndicatorIconButtonProps={{
                                             style: {
-                                                color: '#E21A1A',
+                                                color: '#835AA2',
                                             }
                                         }}
                                     >
