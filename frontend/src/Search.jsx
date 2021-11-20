@@ -370,7 +370,7 @@ export default () => {
                         <FormGroup>
                             <FormLabel component="legend">Мои интересы</FormLabel>
                             <FormControlLabel control={<Checkbox checked={one} onChange={handleChangePreferences} />} label="Наука" name="1" />
-                            <FormControlLabel control={<Checkbox checked={two} onChange={handleChangePreferences} />} label="Искусство" name="2" />
+                            <FormControlLabel control={<Checkbox checked={two} onChange={handleChangePreferences} />} label="Политика" name="2" />
                             <FormControlLabel control={<Checkbox checked={three} onChange={handleChangePreferences} />} label="Спорт" name="3" />
                             <FormControlLabel control={<Checkbox checked={four} onChange={handleChangePreferences} />} label="Другое" name="4" />
                         </FormGroup>

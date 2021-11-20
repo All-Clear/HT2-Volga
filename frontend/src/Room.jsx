@@ -39,7 +39,7 @@ export default function Room({ room, handleBook }) {
                                         }}
                                     >
                                         <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center", flexDirection: "column", textAlign: "center" }}>
-                                            Свободно <br /> место - {4*(room.address-1)+i+1} домик - {room.address}
+                                            Свободно <br /> место - {i+1} домик - {room.address}
                                             {i === 0 ? <img src={first} alt="" style={{height: 200}} /> : ""}
                                             {i === 1 ? <img src={second} alt="" style={{ height: 200 }} /> : ""}
                                             {i === 2 ? <img src={third} alt="" style={{ height: 200 }} /> : ""}
@@ -91,6 +91,9 @@ export default function Room({ room, handleBook }) {
                                         {pass.hasPet ? <li>С домашним животным</li> : ""}
                                         {pass.smoking ? <li>Курит</li> : ""}
                                         {pass.vaccination_against_covid19 ? <li>Вакцинирован от COVID-19</li> : ""}
+                                        {pass.neighborsHasPet ? <li>Против домашних животных рядом</li> : ""}
+                                        {pass.neighborsSmoking ? <li>Против курящих рядом</li> : ""}
+                                        {pass.neighborsHasChild ? <li>Против маленьких детей рядом</li> : ""}
                                         {pass.interests.length === 0 ? "" : (
                                             <li>
                                                 Интересы:
