@@ -243,7 +243,7 @@ export default () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={styleModal}>
-                <img src="/RZD/static/scheme.png" alt="scheme" />
+                <img src="/static/scheme.png" alt="scheme" />
             </Box>
         </Modal>
         <Container>
