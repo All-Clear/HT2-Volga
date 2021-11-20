@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Box, TextField, Button } from "@material-ui/core"
 import { Redirect, Link } from "react-router-dom"
 
-export default function Registration() {
+export default function Registration({ submit }) {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
@@ -51,7 +51,10 @@ export default function Registration() {
                 style={{ marginTop: 5 }}
             />
 
-            <Button variant="outlined" color="primary" style={{ marginTop: 10 }}>Забронировать</Button>
+            <Button variant="outlined" color="primary" style={{ marginTop: 10 }} onClick={() => {
+                console.log(typeof submit)
+                submit()()
+            }}>Забронировать</Button>
 
         </Box>
     )

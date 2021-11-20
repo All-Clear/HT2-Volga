@@ -13,7 +13,7 @@ export default function Room({ room, handleBook }) {
     room.tenants.forEach(item => {
         passengers[item.place_in_room-1] = item
     });
-    console.log(room.address)
+    console.log(room)
     return (
         <div>
             <Box sx={{ minHeight: 300, width: "85%", margin: "auto" }}>
@@ -52,7 +52,7 @@ export default function Room({ room, handleBook }) {
                                             color: "#fff" }}>
                                         <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>
                                             
-                                            <Button onClick={() => handleBook(room.address, i + 1)} variant="contained" color="primary" disableElevation>
+                                            <Button onClick={() => handleBook(room.id_room, i + 1)} variant="contained" color="primary" disableElevation>
                                                 Забронировать
                                             </Button>
                                         </Box>

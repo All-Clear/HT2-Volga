@@ -1,3 +1,4 @@
+import React from "react"
 import Search from "./Search"
 import Registration from "./Registration"
 import Login from "./Login"
@@ -19,7 +20,7 @@ function App() {
       default: "#e9eaed"
     },
     typography: {
-      fontFamily: '\'Montserrat\''
+      fontFamily: '\'MyFont\''
     },
     palette: {
       mode: 'light',
