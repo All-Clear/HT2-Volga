@@ -152,6 +152,10 @@ export default () => {
                     "3": preferences['3'],
                     "4": preferences['4'],
                 },
+                "neighborsAge": neighborsAge,
+                "neighborsHasPet": neighborsHasPet,
+                "neighborsSmoking": neighborsSmoking,
+                "neighborsHasChild": neighborsHasChild,
                 "place_in_room": place
             }
             const res = await fetch('https://hip2.herokuapp.com/booking', {
