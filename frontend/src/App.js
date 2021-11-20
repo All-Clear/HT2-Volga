@@ -25,13 +25,13 @@ function App() {
     palette: {
       mode: 'light',
       primary: {
-        main: '#835AA2'
+        main: '#7B318F'
       },
       success: {
-        main: '#2DD700'
+        main: '#00C12B'
       },
       secondary: {
-        main: '#FDC250'
+        main: '#FFC609'
       }
     },
   });

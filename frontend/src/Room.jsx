@@ -34,7 +34,7 @@ export default function Room({ room, handleBook }) {
                                 >
                                     <FrontSide
                                         style={{
-                                            backgroundColor: '#767d89',
+                                            backgroundColor: '#8a7788',
                                             color: "#fff"
                                         }}
                                     >
@@ -48,7 +48,7 @@ export default function Room({ room, handleBook }) {
                                     </FrontSide>
                                     <BackSide
                                         style={{
-                                            backgroundColor: '#767d89',
+                                            backgroundColor: '#8a7788',
                                             color: "#fff" }}>
                                         <Box sx={{ height: "100%", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>
                                             
@@ -69,7 +69,7 @@ export default function Room({ room, handleBook }) {
                             >
                                 <FrontSide
                                     style={{
-                                        backgroundColor: '#E21A1A',
+                                        backgroundColor: '#7B318F',
                                         color: "#fff"
                                     }}
                                 >
@@ -82,7 +82,7 @@ export default function Room({ room, handleBook }) {
                                     </Box>
                                 </FrontSide>
                                 <BackSide
-                                            style={{ backgroundColor: '#767d89', color: "#fff" }}>
+                                            style={{ backgroundColor: '#7B318F', color: "#fff" }}>
                                     <ul style={{listStyle: "none", padding: 0}}>
                                         <li>{pass.gender ? "Мужчина" : "Женщина"} - {pass.age} лет</li>
                                         <li>{ pass.desire_communicate === null ? "Все равно на общение" :
