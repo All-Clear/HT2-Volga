@@ -1,3 +1,4 @@
+import React from "react"
 import Search from "./Search"
 import Registration from "./Registration"
 import Login from "./Login"
@@ -24,13 +25,13 @@ function App() {
     palette: {
       mode: 'light',
       primary: {
-        main: '#E21A1A'
+        main: '#835AA2'
       },
       success: {
-        main: '#E21A1A'
+        main: '#2DD700'
       },
       secondary: {
-        main: '#767d89'
+        main: '#FDC250'
       }
     },
   });

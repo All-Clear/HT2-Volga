@@ -4,13 +4,33 @@ import {
     FormControlLabel, TextField, FormGroup,
     Select, Checkbox, MenuItem, Switch,
     InputLabel, Slider, Box, Typography, Button, CircularProgress,
-    Snackbar, Container
+    Snackbar, Container, Modal
 } from "@material-ui/core"
-import {Alert} from "@material-ui/lab"
+import { Alert } from "@material-ui/lab"
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import Carousel from 'react-material-ui-carousel'
 import Room from "./Room"
 import style from "./style.css"
+import DateFnsUtils from '@date-io/date-fns';
 import { Redirect } from "react-router-dom"
+import Registration from "./Registration"
+
+const styleModal = {
+    display:"flex",
+    justifyContent:"center",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
 
 function ButtonComponent(props) {
     const { onClick, loading } = props;
@@ -27,7 +47,10 @@ function valuetext(value) {
 }
 
 export default () => {
+    const [selectedDate, setSelectedDate] = React.useState(Date.now())
+    const [selectedEndDate, setSelectedEndDate] = React.useState(Date.now())
     const [isLoading, setIsLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [gender, setGender] = useState(1)
     const [age, setAge] = useState(18)
     const [communication, setCommunication] = useState(0)
@@ -47,6 +70,15 @@ export default () => {
     const [neighborsSmoking, setNeighborsSmoking] = useState(false)
     const [neighborsHasChild, setNeighborsHasChild] = useState(false)
     const [open, setOpen] = useState(false)
+
+    const [openm, setOpenm] = useState(false);
+    const handleOpenm = () => setOpenm(true);
+    const handleClosem = () => setOpenm(false);
+    
+    const [scheme, setScheme] = useState(false);
+    const openScheme = () => setScheme(true);
+    const closeScheme = () => setScheme(false);
+
     const handleChangeGender = (event) => {
         setGender(event.target.value)
     }
@@ -97,9 +129,16 @@ export default () => {
         setOpen(false);
     }
 
-    const handleBook = (id, place) => {
+    const [id, setID] = useState("");
+    const [place, setPlace] = useState(0);
+    const book = () => {
         return async () => {
+            setLoading(true)
+            console.log("book")
             let user = {
+                "date_start": selectedDate,
+                "date_end": selectedEndDate,
+                "id_room": id,
                 "gender": gender,
                 "age": age,
                 "communication": communication,
@@ -115,7 +154,7 @@ export default () => {
                 },
                 "place_in_room": place
             }
-            const res = await fetch('https://aprvp.herokuapp.com/room/' + id + '/add', {
+            const res = await fetch('https://hip2.herokuapp.com/booking', {
                 body: JSON.stringify(user),
                 headers: {
                     'Content-Type': 'application/json'
@@ -125,8 +164,23 @@ export default () => {
             console.log(id)
             setOpen(true)
             submit()
+            handleClosem()
+            setLoading(false)
         }
     }
+
+    const handleBook = (id, place) => {
+        setID(id)
+        setPlace(place)
+        console.log("booked")
+        handleOpenm()
+    }
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+    const handleEndDateChange = (date) => {
+        setSelectedEndDate(date);
+    };
 
     const [goodList, setGoodList] = useState([])
     const [alternativeList, setAlternativeList] = useState([])
@@ -155,7 +209,7 @@ export default () => {
             "neighborsHasChild": neighborsHasChild,
         }
         console.log(body)
-        const res = await fetch('https://aprvp.herokuapp.com/room/sorted', {
+        const res = await fetch('https://hip2.herokuapp.com/sort', {
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
@@ -170,7 +224,28 @@ export default () => {
         setIsLoading(false)
     }
     return (
-        <>
+        <div>
+        <Modal
+            open={openm}
+            onClose={handleClosem}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={styleModal}>
+                {loading && <CircularProgress size={50} />}
+                {!loading && <Registration submit={book} />}
+            </Box>
+        </Modal>
+        <Modal
+            open={scheme}
+            onClose={closeScheme}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={styleModal}>
+                <img src="/RZD/static/scheme.png" alt="scheme" />
+            </Box>
+        </Modal>
         <Container>
         <Grid
             container
@@ -178,6 +253,35 @@ export default () => {
             justifyContent="center"
             spacing={3}
         >
+            <Grid item md={12}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <div style={{ justifyContent: "center", width: "100%", display: "flex" }}>
+                        <KeyboardDatePicker
+                            style={{marginRight:"5px"}}
+                            margin="normal"
+                            id="date-picker-dialog"
+                            label="Дата заезда"
+                            format="dd.MM.yyyy"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                        />
+                        <KeyboardDatePicker
+                            margin="normal"
+                            id="date-picker-dialog"
+                            label="Дата выезда"
+                            format="dd.MM.yyyy"
+                            value={selectedEndDate}
+                            onChange={handleEndDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                        />
+                    </div>
+                </MuiPickersUtilsProvider>
+            </Grid>
             <Grid item md={6}>
                 <Typography variant="h3" component="h2" align="center">О себе</Typography>
                 <Grid
@@ -239,17 +343,17 @@ export default () => {
                         <FormGroup>
                             <FormControlLabel control={
                                 <Checkbox checked={hasPet} onChange={handleChangePet} />
-                            } label="Везете домашнее животное" />
+                            } label="С домашним животным" />
                         </FormGroup>
                         <FormGroup>
                             <FormControlLabel control={
                                 <Checkbox checked={hasGraft} onChange={handleChangeGraft} />
-                            } label="Есть прививка от COVID-19" />
+                            } label="Есть QR-код COVID-19" />
                         </FormGroup>
                         <FormGroup>
                             <FormControlLabel control={
                                 <Checkbox checked={hasChild} onChange={handleChangeChild} />
-                            } label="Едет ли с вами ребенок" />
+                            } label="С маленьким ребенком" />
                         </FormGroup>
                         <FormGroup>
                             <FormControlLabel control={
@@ -296,7 +400,7 @@ export default () => {
                         <FormGroup>
                             <FormControlLabel control={<Checkbox checked={neighborsHasPet} onChange={handleChangeNeighborsPet} />} label="Категорически против домашних животных" />
                             <FormControlLabel control={<Checkbox checked={neighborsSmoking} onChange={handleChangeNeighborsSmoking} />} label="Категорически против курящих" />
-                            <FormControlLabel control={<Checkbox checked={neighborsHasChild} onChange={handleChangeNeighborsChild} />} label="Категорически против детей до двух лет" />
+                            <FormControlLabel control={<Checkbox checked={neighborsHasChild} onChange={handleChangeNeighborsChild} />} label="Категорически против детей" />
                         </FormGroup>
                     </Grid>
                 </Grid>
@@ -311,30 +415,35 @@ export default () => {
         </Container>
             <Box sx={{ minHeight: 300, mt: 1 }}>
             {goodList.length === 0 && alternativeList.length === 0 ? <div></div> : (
-                    <Box style={{ backgroundImage: "url(https://www.rzd.ru/api/media/resources/1736351)", padding: 10, color: "#fff"}}>
+                        <Box style={{ backgroundImage: "url(https://arbuztoday.ru/wp-content/uploads/2021/04/2021-04-14-%D0%9F%D1%80%D0%B8%D0%B2%D0%96%D0%94-%D0%90%D1%81%D1%82%D1%80%D0%B0%D1%85-%D0%B1%D0%B0%D0%B7%D0%B0-%D0%9A%D0%B0%D1%81%D0%BF.-%D0%BB%D0%BE%D1%82%D0%BE%D1%81-4.jpeg)", padding: 10, color: "#fff", height: "100%", backgroundRepeat:"no-repeat", backgroundSize:"cover"}}>
                         <FormControlLabel control={<Switch color="primary" checked={chaisedList} onChange={handleChangeList} />} label="Показать альтернативные места" />
+                        <Button color="primary" variant="contained" style={{ marginBottom: "10px" }} onClick={openScheme}>Показать схему домов</Button>
                         {
                             chaisedList ? 
                                 alternativeList.length === 0 ? <p>Нет вариантов</p> : (
                                     <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible
                                         activeIndicatorIconButtonProps={{
                                             style: {
-                                                color: '#E21A1A',
+                                                color: '#835AA2',
                                             }
                                         }}
                                     >
-                                        {alternativeList.map((item) => <Room key={item.id_room} room={item} handleBook={handleBook}/>)}
+                                        {alternativeList.map((item) => <Room key={item.address} room={item} handleBook={handleBook}/>)}
                                     </Carousel>
                                 ) :
                                 goodList.length === 0 ? <p>Нет вариантов</p> : (
                                     <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible
                                         activeIndicatorIconButtonProps={{
                                             style: {
-                                                color: '#E21A1A',
+                                                color: '#835AA2',
                                             }
                                         }}
                                     >
-                                        {goodList.map((item) => <Room key={item.id_room} room={item} handleBook={handleBook}/>)}
+                                        {goodList.map((item) => {
+                                            console.log(item.address)
+                                            return <Room key={item.address} room={item} handleBook={handleBook}/>
+                                        })}
+                                            
                                     </Carousel>
                             )
                         }
@@ -345,6 +454,6 @@ export default () => {
                 Место забронированно успешно
             </Alert>
         </Snackbar>
-        </>
+        </div>
     )
 }
