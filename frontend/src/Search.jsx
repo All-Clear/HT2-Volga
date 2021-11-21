@@ -247,7 +247,7 @@ export default () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={styleModal}>
-                <img src="/static/scheme.png" alt="scheme" />
+                <img src="/static/scheme_mob.png" alt="scheme" style={{width:"100%"}} />
             </Box>
         </Modal>
         <Container>
