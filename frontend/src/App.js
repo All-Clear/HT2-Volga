@@ -1,15 +1,15 @@
 import React from "react"
 import Search from "./Search"
-import Registration from "./Registration"
-import Login from "./Login"
+// import Registration from "./Registration"
+// import Login from "./Login"
 
 
 import { ThemeProvider, createTheme } from "@material-ui/core"
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  // BrowserRouter as Router,
+  // Switch,
+  // Route,
 } from "react-router-dom";
 
 

@@ -9,14 +9,14 @@ import {
 import { Alert } from "@material-ui/lab"
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
+    // KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Carousel from 'react-material-ui-carousel'
 import Room from "./Room"
 import style from "./style.css"
 import DateFnsUtils from '@date-io/date-fns';
-import { Redirect } from "react-router-dom"
+// import { Redirect } from "react-router-dom"
 import Registration from "./Registration"
 
 const API_URI = "https://hip2.herokuapp.com"
@@ -48,7 +48,7 @@ function valuetext(value) {
     return `${value}`;
 }
 
-export default () => {
+export default function Search(props) {
     const [selectedDate, setSelectedDate] = React.useState(Date.now())
     const [selectedEndDate, setSelectedEndDate] = React.useState(Date.now())
     const [isLoading, setIsLoading] = useState(false)
@@ -167,7 +167,8 @@ export default () => {
                 },
                 method: 'POST',
             })
-            console.log(id)
+            res.json();
+            // console.log(id)
             setOpen(true)
             submit()
             handleClosem()
