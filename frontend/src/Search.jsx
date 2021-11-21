@@ -19,6 +19,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Redirect } from "react-router-dom"
 import Registration from "./Registration"
 
+const API_URI = "https://hip2.herokuapp.com"
+
 const styleModal = {
     display: "flex",
     justifyContent: "center",
@@ -158,7 +160,7 @@ export default () => {
                 "neighborsHasChild": neighborsHasChild,
                 "place_in_room": place
             }
-            const res = await fetch('https://hip2.herokuapp.com/booking', {
+            const res = await fetch(API_URI+'/booking', {
                 body: JSON.stringify(user),
                 headers: {
                     'Content-Type': 'application/json'
@@ -213,7 +215,7 @@ export default () => {
             "neighborsHasChild": neighborsHasChild,
         }
         console.log(body)
-        const res = await fetch('https://hip2.herokuapp.com/sort', {
+        const res = await fetch(API_URI+'/sort', {
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
