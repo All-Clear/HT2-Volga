@@ -1,14 +1,18 @@
 from flask import Flask
 
+from pages import booking
 from pages import index
 from pages import sort
+from pages import add
 
 app = Flask(__name__)
 
 app.config.from_pyfile("./config.py")
 
+app.register_blueprint(booking.blueprint)
 app.register_blueprint(index.blueprint)
 app.register_blueprint(sort.blueprint)
+app.register_blueprint(add.blueprint)
 
 
 @app.after_request

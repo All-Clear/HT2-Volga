@@ -5,9 +5,9 @@ from db.tables.rooms import Room
 blueprint = Blueprint("index", __name__)
 
 
-@blueprint.route("/", methods=["SELECT"])
+@blueprint.route("/", methods=["OPTIONS"])
 def index_select():
-    return []
+    return {"result": []}
 
 
 @blueprint.route("/", methods=["GET"])
