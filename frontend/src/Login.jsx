@@ -3,13 +3,17 @@ import { Box, TextField, Button } from "@material-ui/core"
 import { Redirect } from "react-router-dom"
 
 export default function Login() {
+    // Forms
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const token = window.localStorage.getItem("token")
     const [redirect, setRedirect] = useState(false)
+    // token validation
     if (token != null) {
         return <Redirect to='/search' />;
     }
+
+    //forms support
     const handleChangeEmail = (event) => {
         setEmail(event.target.value)
     }
@@ -43,8 +47,8 @@ export default function Login() {
                 label="Email"
                 value={email}
                 onChange={handleChangeEmail}
-                />
-            
+            />
+
             <TextField
                 type="password"
                 label="Пароль"
